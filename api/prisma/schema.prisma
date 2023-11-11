@@ -15,7 +15,9 @@ model User {
   email                     String  @unique
   name                      String?
   user_education_history    User_education_history    @relation(fields: [id_user_education], references: [id_user_education])
+  user_job_history          User_job_history          @relation(fields: [id_user_job], references: [id_user_job])
   id_user_education         Int
+  id_user_job               Int
 }
 
 model User_education_history {
@@ -30,7 +32,13 @@ model User_education_history {
 
 model User_job_history {
   id_user_job               Int     @id @default(autoincrement())
-
+  pekerjaan_terdahulu       String
+  perusahaan_terdahulu      String
+  tahun_mulai               DateTime
+  tahun_selesai             DateTime
+  pengalaman_kerja          String
+  keahlian                  String
+  users                     User[]
 }
 
 model Job {
