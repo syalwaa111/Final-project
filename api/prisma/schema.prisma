@@ -27,3 +27,31 @@ model User_education_history {
   organisasi                String
   users                     User[]
 }
+
+model User_job_history {
+  id_user_job               Int     @id @default(autoincrement())
+
+}
+
+model Job {
+  id_job                    Int     @id @default(autoincrement())
+
+}
+
+model Job_category {
+  id_job_category           Int     @id @default(autoincrement())
+
+}
+
+model Company {
+  id_company                Int     @id @default(autoincrement())
+  nama_perusahaan           String
+}
+
+model Admin {
+  id_admin                  Int     @id @default(autoincrement())
+}
+
+model Application {
+  id_application            Int     @id @default(autoincrement())
+}
