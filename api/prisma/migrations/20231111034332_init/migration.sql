@@ -9,19 +9,18 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "User_education_history" (
-    "id_user_education" SERIAL NOT NULL,
-    "pendidikan_terakhir" TEXT NOT NULL,
-    "tahun_mulai" TIMESTAMP(3) NOT NULL,
-    "tahun_selesai" TIMESTAMP(3) NOT NULL,
-    "nilai" DOUBLE PRECISION NOT NULL,
-    "organisasi" TEXT NOT NULL,
+CREATE TABLE "Admin" (
+    "id_admin" SERIAL NOT NULL,
+    "username" VARCHAR,
+    "password" VARCHAR,
+    "email" VARCHAR,
+    "id_application" INT,
 
-    CONSTRAINT "User_education_history_pkey" PRIMARY KEY ("id_user_education")
+    CONSTRAINT "Admin_pkey" PRIMARY KEY ("id_admin")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+CREATE UNIQUE INDEX "Admin_email_key" ON "Admin"("email");
 
 -- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_id_user_education_fkey" FOREIGN KEY ("id_user_education") REFERENCES "User_education_history"("id_user_education") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Admin" ADD CONSTRAINT "Admin_id_fkey" FOREIGN KEY ("id_admin") REFERENCES "Admin"("id_admin") ON DELETE RESTRICT ON UPDATE CASCADE;

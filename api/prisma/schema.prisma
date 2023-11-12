@@ -16,7 +16,7 @@ model User {
   name                      String?
   user_education_history    User_education_history    @relation(fields: [id_user_education], references: [id_user_education])
   id_user_education         Int
-}
+} 
 
 model User_education_history {
   id_user_education         Int     @id @default(autoincrement())
@@ -50,6 +50,10 @@ model Company {
 
 model Admin {
   id_admin                  Int     @id @default(autoincrement())
+  username
+  password
+  email                     String @unique
+  id_application            Int 
 }
 
 model Application {
