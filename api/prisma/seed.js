@@ -21,7 +21,25 @@ async function main() {
     },
   });  
 
-  console.log({ alice })
+  const bob = await prisma.user.upsert({
+    where: { email: 'bob@prisma.io' },
+    update: {},
+    create: {
+      email: 'bob@prisma.io',
+      name: 'Bob',
+      user_job_histories: {
+        create: {
+          pekerjaan_terdahulu: 'Web Developer', 
+          perusahaan_terdahulu: 'Rakamin', 
+          tahun_mulai: new Date('2019-01-01'),
+          tahun_selesai: new Date('2022-01-01'),
+          pengalaman_kerja: 'Back End Developer',
+          keahlian: 'Node JS, Express JS, React JS, Next JS',
+        },
+      },
+    },
+  });
+  console.log({ alice, bob })
 }
 main()
   .then(async () => {
