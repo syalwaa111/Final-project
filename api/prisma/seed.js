@@ -2,14 +2,14 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 async function main() {
-  const alice = await prisma.user.upsert({
-    where: { email: 'alice@prisma.io' },
+  const adel = await prisma.user.upsert({
+    where: { email: 'adel@prisma.io' },
     update: {},
     create: {
-      email: 'alice@prisma.io',
-      username: 'Alice',
+      email: 'adel@prisma.io',
+      username: 'adel',
       password      : '12345678',
-      nama_lengkap  : 'Alice',
+      nama_lengkap  : 'adel',
       alamat        : 'jajaj',
       no_telp       : '99292929',
       jenis_kelamin : 'Female',
@@ -52,6 +52,7 @@ async function main() {
       },
     },
   });
+  
   const xyla = await prisma.user.upsert({
     where: { email: 'xyla@prisma.io' },
     update: {},
@@ -71,7 +72,7 @@ async function main() {
         },
 
   });
-  console.log({ alice, bob, xyla })
+  console.log({ adel, bob, xyla })
 
 
 }
