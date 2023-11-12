@@ -17,42 +17,41 @@ enum JenisKelamin {
 }
 
 model User {
-  id                        Int                       @id @default(autoincrement())
-  username                  String    
-  password                  String                    @db.VarChar(50)
-  email                     String                    @unique
-  nama_lengkap              String?                   @db.VarChar(50)
-  alamat                    String                    @db.VarChar(255)
-  no_telp                   String
-  jenis_kelamin             String  
-  tanggal_lahir             DateTime                  @db.Date
-  tanggal_gabung            DateTime  @default(now()) @db.Date
-  user_education_histories  User_education_history[]  @relation("UserEducation")
-  user_job_histories        User_job_history[]        @relation("UserJob")
-
+  id_user            Int                    @id @default(autoincrement())
+  username           String    
+  password           String                 @db.VarChar(50)
+  email              String                 @db.VarChar(50)
+  nama_lengkap       String                 @db.VarChar(50)
+  alamat             String                 @db.VarChar(255)
+  no_telp            Int
+  jenis_kelamin      JenisKelamin  
+  tgl_lahir          DateTime               @db.Date
+  tgl_gabung         DateTime               @default(now()) @db.Date
+  id_user_education  Int?                   @unique
+  id_job_history     Int?                   @unique
+  educationHistory   UserEducationHistory?  @relation(fields: [id_user_education], references: [id])
+  jobHistory         UserJobHistory?        @relation(fields: [id_job_history], references: [id])
 }
 
-model User_education_history {
-  id                        Int                      @id @default(autoincrement())
-  pendidikan_terakhir       String
-  tahun_mulai               DateTime
-  tahun_selesai             DateTime
-  nilai                     Float
-  organisasi                String
-  userId                    Int
-  user                      User                   @relation("UserEducation", fields: [userId], references: [id])
+model UserEducationHistory {
+  id                 Int   @id @default(autoincrement())
+  pendidikan_terakhir  String    @db.VarChar(50)
+  tahun_mulai          DateTime  @db.Date
+  tahun_selesai        DateTime  @db.Date
+  nilai                Float
+  organisasi           String    @db.VarChar(50)
+  User                 User?
 }
 
-model User_job_history {
-  id                        Int                    @id @default(autoincrement())
-  pekerjaan_terdahulu       String
-  perusahaan_terdahulu      String
-  tahun_mulai               DateTime
-  tahun_selesai             DateTime
-  pengalaman_kerja          String
-  keahlian                  String
-  userId                    Int
-  user                      User                   @relation("UserJob", fields: [userId], references: [id])
+model UserJobHistory {
+  id                  Int   @id @default(autoincrement())
+  pekerjaan_terdahulu String    @db.VarChar(50)
+  perusahaan_terdahulu String    @db.VarChar(50)
+  tahun_mulai         DateTime  @db.Date
+  tahun_selesai       DateTime  @db.Date
+  pengalaman_kerja    String    @db.VarChar(255)
+  keahlian            String    @db.VarChar(50)
+  User                User?
 }
 
 // model Job {
