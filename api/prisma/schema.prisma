@@ -50,10 +50,11 @@ model Company {
 
 model Admin {
   id_admin                  Int     @id @default(autoincrement())
-  username
-  password
-  email                     String @unique
+  username                  String
+  password                  String  
+  email                     String  
   id_application            Int 
+  Application               Application?  @relation(fields: [id_application], references:[id])
 }
 
 model Application {
