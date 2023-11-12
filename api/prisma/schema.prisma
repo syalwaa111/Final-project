@@ -10,56 +10,71 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum JenisKelamin {
+  MALE
+  FEMALE
+  OTHER
+}
+
 model User {
-  id_user                   Int     @id @default(autoincrement())
-  email                     String  @unique
-  name                      String?
-  user_education_history    User_education_history    @relation(fields: [id_user_education], references: [id_user_education])
-  user_job_history          User_job_history          @relation(fields: [id_user_job], references: [id_user_job])
-  id_user_education         Int
-  id_user_job               Int
+  id                        Int                       @id @default(autoincrement())
+  username                  String    
+  password                  String                    @db.VarChar(50)
+  email                     String                    @unique
+  nama_lengkap              String?                   @db.VarChar(50)
+  alamat                    String                    @db.VarChar(255)
+  no_telp                   String
+  jenis_kelamin             String  
+  tanggal_lahir             DateTime                  @db.Date
+  tanggal_gabung            DateTime  @default(now()) @db.Date
+  user_education_histories  User_education_history[]  @relation("UserEducation")
+  user_job_histories        User_job_history[]        @relation("UserJob")
+
 }
 
 model User_education_history {
-  id_user_education         Int     @id @default(autoincrement())
+  id                        Int                      @id @default(autoincrement())
   pendidikan_terakhir       String
   tahun_mulai               DateTime
   tahun_selesai             DateTime
   nilai                     Float
   organisasi                String
-  users                     User[]
+  userId                    Int
+  user                      User                   @relation("UserEducation", fields: [userId], references: [id])
 }
 
 model User_job_history {
-  id_user_job               Int     @id @default(autoincrement())
+  id                        Int                    @id @default(autoincrement())
   pekerjaan_terdahulu       String
   perusahaan_terdahulu      String
   tahun_mulai               DateTime
   tahun_selesai             DateTime
   pengalaman_kerja          String
   keahlian                  String
-  users                     User[]
+  userId                    Int
+  user                      User                   @relation("UserJob", fields: [userId], references: [id])
 }
 
-model Job {
-  id_job                    Int     @id @default(autoincrement())
+// model Job {
+//   id_job                    Int     @id @default(autoincrement())
 
-}
+// }
 
-model Job_category {
-  id_job_category           Int     @id @default(autoincrement())
+// model Job_category {
+//   id_job_category           Int     @id @default(autoincrement())
 
-}
+// }
 
-model Company {
-  id_company                Int     @id @default(autoincrement())
-  nama_perusahaan           String
-}
+// model Company {
+//   id_company                Int     @id @default(autoincrement())
+//   nama_perusahaan           String
+// }
 
-model Admin {
-  id_admin                  Int     @id @default(autoincrement())
-}
+// model Admin {
+//   id_admin                  Int     @id @default(autoincrement())
+// }
 
-model Application {
-  id_application            Int     @id @default(autoincrement())
-}
+// model Application {
+//   id_application            Int     @id @default(autoincrement())
+
+//}
