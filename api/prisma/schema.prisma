@@ -29,17 +29,28 @@ model User_education_history {
 }
 
 model User_job_history {
-  id_user_job               Int     @id @default(autoincrement())
+   id                        Int                    @id @default(autoincrement())
+  pekerjaan_terdahulu       String
+  perusahaan_terdahulu      String
+  tahun_mulai               DateTime
+  tahun_selesai             DateTime
+  pengalaman_kerja          String
+  keahlian                  String
+  userId                    Int
+  user                      User                   @relation("UserJob", fields: [userId], references: [id])
 
 }
 
 model Job {
   id_job                    Int     @id @default(autoincrement())
 
+
 }
 
 model Job_category {
   id_job_category           Int     @id @default(autoincrement())
+  nama_category             String
+  jobId                       Job[]    @relation("UserJobCategory", fields: [id], references: [jobCategoryId])
 
 }
 
