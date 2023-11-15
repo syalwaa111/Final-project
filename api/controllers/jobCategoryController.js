@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 exports.getJobCategories = async (req, res) => {
   try {
     const jobCategories = await prisma.job_category.findMany({
-      include: { jobId: true },
+      include: { job: true },
     });
     res.json(jobCategories);
   } catch (error) {
@@ -15,11 +15,11 @@ exports.getJobCategories = async (req, res) => {
 };
 
 exports.getJobCategoryById = async (req, res) => {
-  const { id } = req.params;
+  const id = parseInt(req.params.id);
   try {
     const jobCategory = await prisma.job_category.findUnique({
-      where: { id_job_category: parseInt(id) },
-      include: { jobId: true },
+      where: { id },
+      include: { job: true },
     });
 
     if (!jobCategory) {
@@ -34,19 +34,16 @@ exports.getJobCategoryById = async (req, res) => {
 };
 
 exports.createJobCategory = async (req, res) => {
-  const { nama_category, jobs } = req.body;
+  const { nama_category, jobId } = req.body;
 
   try {
-    const createdCategory = await prisma.job_category.upsert({
-      where: { nama_category },
-      update: {},
-      create: {
+    const createdCategory = await prisma.job_category.create({
+      data: {
         nama_category,
-        jobId: {
-          create: jobs,
-        },
+        job: {
+          connect: { id: jobId }
+      }
       },
-      include: { jobId: true },
     });
 
     res.json(createdCategory);
@@ -56,30 +53,20 @@ exports.createJobCategory = async (req, res) => {
   }
 };
 
+
 exports.updateJobCategory = async (req, res) => {
   const { id } = req.params;
-  const { nama_category, jobs } = req.body;
+  const { nama_category, jobId } = req.body;
 
   try {
-    const updatedCategory = await prisma.job_category.upsert({
-      where: { id_job_category: parseInt(id) },
-      update: {
+    const updatedCategory = await prisma.job_category.update({
+      where: { id: parseInt(id) },
+      data: {
         nama_category,
-        jobId: {
-          upsert: jobs.map((job) => ({
-            where: { id: job.id || undefined },
-            update: job,
-            create: job,
-          })),
-        },
+        job: {
+          connect: { id: jobId }
+        }
       },
-      create: {
-        nama_category,
-        jobId: {
-          create: jobs,
-        },
-      },
-      include: { jobId: true },
     });
 
     res.json(updatedCategory);
@@ -89,12 +76,13 @@ exports.updateJobCategory = async (req, res) => {
   }
 };
 
+
 exports.deleteJobCategory = async (req, res) => {
   const { id } = req.params;
 
   try {
     await prisma.job_category.delete({
-      where: { id_job_category: parseInt(id) },
+      where: { id: parseInt(id) },
     });
 
     res.json({ message: 'Job category deleted successfully' });
@@ -103,5 +91,3 @@ exports.deleteJobCategory = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
-

@@ -1,12 +1,12 @@
 const express = require('express');
-const userRoutes = require("./routes/userRoutes");
+const userRoutes = require("./route/userRoutes");
 const jobCategoryRoutes = require('./jobCategoryRoutes');
 
 const app = express();
 app.use(express.json());
 
 app.use('/users', userRoutes);
-app.use('/jobcategory', jobCategoryRoutes);
+app.use('/job', jobCategoryRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
