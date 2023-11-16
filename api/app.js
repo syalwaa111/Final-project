@@ -1,6 +1,6 @@
 const express = require('express');
-const userRoutes = require("./route/userRoutes");
-const jobCategoryRoutes = require('./jobCategoryRoutes');
+const userRoutes = require("./routes/userRoutes");
+const jobCategoryRoutes = require('./routes/jobCategoryRoutes');
 
 const app = express();
 app.use(express.json());
