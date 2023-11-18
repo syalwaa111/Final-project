@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum JenisKelamin {
+  MALE
+  FEMALE
+  OTHER
+}
+
+model User {
+  id                        Int                       @id @default(autoincrement())
+  username                  String    
+  password                  String                    @db.VarChar(50)
+  email                     String                    @unique
+  nama_lengkap              String?                   @db.VarChar(50)
+  alamat                    String                    @db.VarChar(255)
+  no_telp                   String
+  jenis_kelamin             String  
+  tanggal_lahir             DateTime                  @db.Date
+  tanggal_gabung            DateTime  @default(now()) @db.Date
+  user_education_histories  User_education_history[]  @relation("UserEducation")
+  user_job_histories        User_job_history[]        @relation("UserJob")
+
+}
+
+model User_education_history {
+  id                        Int                      @id @default(autoincrement())
+  pendidikan_terakhir       String
+  tahun_mulai               DateTime
+  tahun_selesai             DateTime
+  nilai                     Float
+  organisasi                String
+  userId                    Int
+  user                      User                   @relation("UserEducation", fields: [userId], references: [id])
+}
+
+model User_job_history {
+  id                        Int                    @id @default(autoincrement())
+  pekerjaan_terdahulu       String
+  perusahaan_terdahulu      String
+  tahun_mulai               DateTime
+  tahun_selesai             DateTime
+  pengalaman_kerja          String
+  keahlian                  String
+  userId                    Int
+  user                      User                   @relation("UserJob", fields: [userId], references: [id])
+}
+
+// model Job {
+//   id_job                    Int     @id @default(autoincrement())
+
+// }
+
+// model Job_category {
+//   id_job_category           Int     @id @default(autoincrement())
+
+// }
+
+// model Company {
+//   id_company                Int     @id @default(autoincrement())
+//   nama_perusahaan           String
+// }
+
+model Admin {
+  id                           Int           @id @default(autoincrement())
+  applications                 Application[] @relation("Application")
+}
+
+model Application {
+  id                            Int          @id @default(autoincrement())
+  tgl_pengajuan                 DateTime
+  status                        String       @db.VarChar(50)
+  jobId                         Int 
+  adminId                       Int
+  admin                         Admin       @relation("Application", fields: [adminId], references: [id])
+}
