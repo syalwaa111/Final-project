@@ -70,16 +70,11 @@ model User_job_history {
 //   nama_perusahaan           String
 // }
 
-model Admin {
-  id                           Int           @id @default(autoincrement())
-  applications                 Application[] @relation("Application")
-}
+// model Admin {
+//   id_admin                  Int     @id @default(autoincrement())
+// }
 
-model Application {
-  id                            Int          @id @default(autoincrement())
-  tgl_pengajuan                 DateTime
-  status                        String       @db.VarChar(50)
-  jobId                         Int 
-  adminId                       Int
-  admin                         Admin       @relation("Application", fields: [adminId], references: [id])
-}
+// model Application {
+//   id_application            Int     @id @default(autoincrement())
+
+//}

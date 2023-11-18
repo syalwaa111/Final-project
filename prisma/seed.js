@@ -42,13 +42,12 @@ async function main() {
       tanggal_gabung: new Date('2023-01-01'),
       user_job_histories: {
         create: {
-          pekerjaan_terdahulu : 'Web Developer', 
-          perusahaan_terdahulu : 'Rakamin', 
-          tahun_mulai : new Date('2019-01-01'),
-          tahun_selesai : new Date('2022-01-01'),
-          pengalaman_kerja : 'Back End Developer',
-          keahlian : 'Node JS, Express JS, React JS, Next JS',
-          
+          pekerjaan_terdahulu: 'Web Developer', 
+          perusahaan_terdahulu: 'Rakamin', 
+          tahun_mulai: new Date('2019-01-01'),
+          tahun_selesai: new Date('2022-01-01'),
+          pengalaman_kerja: 'Back End Developer',
+          keahlian: 'Node JS, Express JS, React JS, Next JS',
         },
       },
     },
@@ -72,32 +71,7 @@ async function main() {
         },
 
   });
-  const remy = await prisma.user.upsert({
-    where: { email: 'remy@prisma.io' },
-    update: {},
-    create: {
-      email: 'remy@prisma.io',
-      username      : 'remy',
-      password      : '12345678',
-      nama_lengkap  : 'remy',
-      alamat        : 'Jakarta',
-      no_telp       : '0928242321',
-      jenis_kelamin : 'Female',
-      tanggal_lahir : new Date('2002-01-01'),
-      tanggal_gabung: new Date('2023-01-01'),
-      user_job_histories: {
-        create: {
-          pekerjaan_terdahulu: 'Design Grafis', 
-          perusahaan_terdahulu: 'Qwords', 
-          tahun_mulai: new Date('2019-01-01'),
-          tahun_selesai: new Date('2022-01-01'),
-          pengalaman_kerja: 'design grafis',
-          keahlian: 'ilustrator, software design',
-        },
-      },
-    },
-  });
-  console.log({ alice, bob, xyla, remy })
+  console.log({ alice, bob, xyla })
 
 
 }
