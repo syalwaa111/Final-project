@@ -113,8 +113,6 @@ const deleteApplication = async (req, res) => {
 };
 
 
-        
-
 module.exports = {
     createApplication,
     getAllApplications,
